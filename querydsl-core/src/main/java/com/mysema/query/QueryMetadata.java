@@ -30,14 +30,14 @@ public interface QueryMetadata extends Serializable {
      *
      * @param o
      */
-    void addGroupBy(Expression<?>... o);
+    QueryMetadata addGroupBy(Expression<?>... o);
 
     /**
      * Add the given having expressions
      *
      * @param o
      */
-    void addHaving(Predicate... o);
+    QueryMetadata addHaving(Predicate... o);
 
     /**
      * Add the given query join
@@ -45,56 +45,56 @@ public interface QueryMetadata extends Serializable {
      * @param joinType
      * @param expr
      */
-    void addJoin(JoinType joinType, Expression<?> expr);
-    
+    QueryMetadata addJoin(JoinType joinType, Expression<?> expr);
+
     /**
      * Add the given query join
      *
      */
-    void addJoin(JoinExpression join);
+    QueryMetadata addJoin(JoinExpression join);
 
     /**
      * Add the given join condition to the last given join
      *
      * @param o
      */
-    void addJoinCondition(Predicate o);
+    QueryMetadata addJoinCondition(Predicate o);
 
     /**
      * Add the given order specifiers
      *
      * @param o
      */
-    void addOrderBy(OrderSpecifier<?>... o);
+    QueryMetadata addOrderBy(OrderSpecifier<?>... o);
 
     /**
      * Add the given projections
      *
      * @param o
      */
-    void addProjection(Expression<?>... o);
+    QueryMetadata addProjection(Expression<?>... o);
 
     /**
      * Add the given where expressions
      *
      * @param o
      */
-    void addWhere(Predicate... o);
+    QueryMetadata addWhere(Predicate... o);
 
     /**
      * Clear the order expressions
      */
-    void clearOrderBy();
+    QueryMetadata clearOrderBy();
 
     /**
      * Clear the projection
      */
-    void clearProjection();
+    QueryMetadata clearProjection();
 
     /**
      * Clear the where expressions
      */
-    void clearWhere();
+    QueryMetadata clearWhere();
 
     /**
      * Clone this QueryMetadata instance
@@ -180,51 +180,51 @@ public interface QueryMetadata extends Serializable {
     /**
      * Reset the projection
      */
-    void reset();
+    QueryMetadata reset();
 
     /**
      * @param distinct
      */
-    void setDistinct(boolean distinct);
+    QueryMetadata setDistinct(boolean distinct);
 
     /**
      * @param limit
      */
-    void setLimit(@Nullable Long limit);
+    QueryMetadata setLimit(@Nullable Long limit);
 
     /**
      * @param restriction
      */
-    void setModifiers(QueryModifiers restriction);
+    QueryMetadata setModifiers(QueryModifiers restriction);
 
     /**
      * @param offset
      */
-    void setOffset(@Nullable Long offset);
+    QueryMetadata setOffset(@Nullable Long offset);
 
     /**
      * @param unique
      */
-    void setUnique(boolean unique);
+    QueryMetadata setUnique(boolean unique);
 
     /**
      * @param <T>
      * @param param
      * @param value
      */
-    <T> void setParam(ParamExpression<T> param, T value);
-    
+    <T> QueryMetadata setParam(ParamExpression<T> param, T value);
+
     /**
      * @param flag
      */
-    void addFlag(QueryFlag flag);
-    
+    QueryMetadata addFlag(QueryFlag flag);
+
     /**
      * @param flag
      * @return
      */
-    boolean hasFlag(QueryFlag flag); 
-    
+    boolean hasFlag(QueryFlag flag);
+
     /**
      * @return
      */

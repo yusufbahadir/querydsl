@@ -59,21 +59,23 @@ public class DefaultQueryMetadata implements QueryMetadata, Cloneable {
     private Set<QueryFlag> flags = new LinkedHashSet<QueryFlag>();
 
     @Override
-    public void addGroupBy(Expression<?>... o) {
+    public QueryMetadata addGroupBy(Expression<?>... o) {
         groupBy.addAll(Arrays.<Expression<?>> asList(o));
+        return this;
     }
 
     @Override
-    public void addHaving(Predicate... o) {
+    public QueryMetadata addHaving(Predicate... o) {
         for (Predicate e : o){
             if (!BooleanBuilder.class.isInstance(e) || ((BooleanBuilder)e).hasValue()){
                 having.and(e);
             }
         }
+        return this;
     }
 
     @Override
-    public void addJoin(JoinType joinType, Expression<?> expr) {
+    public QueryMetadata addJoin(JoinType joinType, Expression<?> expr) {
         if (!exprInJoins.contains(expr)) {
             if (expr instanceof Path<?> && joinType == JoinType.DEFAULT){
                 ensureRoot((Path<?>) expr);
@@ -81,10 +83,11 @@ public class DefaultQueryMetadata implements QueryMetadata, Cloneable {
             joins.add(new JoinExpression(joinType, expr));
             exprInJoins.add(expr);
         }
+        return this;
     }
-    
+
     @Override
-    public void addJoin(JoinExpression join){
+    public QueryMetadata addJoin(JoinExpression join){
         Expression<?> expr = join.getTarget();
         if (!exprInJoins.contains(expr)) {
             if (expr instanceof Path<?> && join.getType() == JoinType.DEFAULT){
@@ -93,44 +96,52 @@ public class DefaultQueryMetadata implements QueryMetadata, Cloneable {
             joins.add(join);
             exprInJoins.add(expr);
         }
+        return this;
     }
 
     @Override
-    public void addJoinCondition(Predicate o) {
+    public QueryMetadata addJoinCondition(Predicate o) {
         if (!joins.isEmpty()) {
             joins.get(joins.size() - 1).addCondition(o);
         }
+        return this;
     }
 
     @Override
-    public void addOrderBy(OrderSpecifier<?>... o) {
+    public QueryMetadata addOrderBy(OrderSpecifier<?>... o) {
         orderBy.addAll(Arrays.asList(o));
+        return this;
     }
 
     @Override
-    public void addProjection(Expression<?>... o) {
+    public QueryMetadata addProjection(Expression<?>... o) {
         projection.addAll(Arrays.asList(o));
+        return this;
     }
 
     @Override
-    public void addWhere(Predicate... o) {
+    public QueryMetadata addWhere(Predicate... o) {
         for (Predicate e : o){
             if (!BooleanBuilder.class.isInstance(e) || ((BooleanBuilder)e).hasValue()){
                 where.and(e);
             }
         }
+        return this;
     }
 
-    public void clearOrderBy(){
+    public QueryMetadata clearOrderBy(){
         orderBy = new ArrayList<OrderSpecifier<?>>();
+        return this;
     }
 
-    public void clearProjection(){
+    public QueryMetadata clearProjection(){
         projection = new ArrayList<Expression<?>>();
+        return this;
     }
 
-    public void clearWhere(){
+    public QueryMetadata clearWhere(){
         where = new BooleanBuilder();
+        return this;
     }
 
     @Override
@@ -211,53 +222,61 @@ public class DefaultQueryMetadata implements QueryMetadata, Cloneable {
     }
 
     @Override
-    public void reset() {
+    public QueryMetadata reset() {
         clearProjection();
         params = new HashMap<ParamExpression<?>,Object>();
         modifiers = new QueryModifiers();
+        return this;
     }
 
     @Override
-    public void setDistinct(boolean distinct) {
+    public QueryMetadata setDistinct(boolean distinct) {
         this.distinct = distinct;
+        return this;
     }
 
     @Override
-    public void setLimit(Long limit) {
+    public QueryMetadata setLimit(Long limit) {
         if (modifiers == null || modifiers.getOffset() == null){
             modifiers = QueryModifiers.limit(limit);
         }else{
             modifiers = new QueryModifiers(limit, modifiers.getOffset());
         }
+        return this;
     }
 
     @Override
-    public void setModifiers(@Nullable QueryModifiers restriction) {
+    public QueryMetadata setModifiers(@Nullable QueryModifiers restriction) {
         this.modifiers = restriction;
+        return this;
     }
 
     @Override
-    public void setOffset(Long offset) {
+    public QueryMetadata setOffset(Long offset) {
         if (modifiers == null || modifiers.getLimit() == null){
             modifiers = QueryModifiers.offset(offset);
         }else{
             modifiers = new QueryModifiers(modifiers.getLimit(), offset);
         }
+        return this;
     }
 
     @Override
-    public void setUnique(boolean unique) {
+    public QueryMetadata setUnique(boolean unique) {
         this.unique = unique;
+        return this;
     }
 
     @Override
-    public <T> void setParam(ParamExpression<T> param, T value) {
+    public <T> QueryMetadata setParam(ParamExpression<T> param, T value) {
         params.put(param, value);
+        return this;
     }
 
     @Override
-    public void addFlag(QueryFlag flag) {
-        flags.add(flag);        
+    public QueryMetadata addFlag(QueryFlag flag) {
+        flags.add(flag);
+        return this;
     }
 
     @Override
