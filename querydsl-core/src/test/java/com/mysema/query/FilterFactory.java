@@ -312,6 +312,10 @@ public class FilterFactory {
         rv.add(expr.like("%"+knownValue.substring(1)));
         rv.add(expr.like("%"+knownValue.substring(1,2)+"%"));
 
+        rv.add(expr.likeIgnoreCase(knownValue.substring(0,1)+"%"));
+        rv.add(expr.likeIgnoreCase("%"+knownValue.substring(1)));
+        rv.add(expr.likeIgnoreCase("%"+knownValue.substring(1,2)+"%"));
+
         rv.add(expr.like(knownValue.substring(0,1)+"%", '!'));
         rv.add(expr.like("%"+knownValue.substring(1), '!'));
         rv.add(expr.like("%"+knownValue.substring(1,2)+"%", '!'));
