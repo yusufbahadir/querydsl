@@ -13,18 +13,13 @@
  */
 package com.mysema.query.jdo;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Transaction;
-
-import com.mysema.query.types.Projections;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
 
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.NonUniqueResultException;
@@ -33,6 +28,11 @@ import com.mysema.query.jdo.test.domain.Product;
 import com.mysema.query.jdo.test.domain.QBook;
 import com.mysema.query.jdo.test.domain.QProduct;
 import com.mysema.query.types.Expression;
+import com.mysema.query.types.Projections;
+
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class BasicsTest extends AbstractJDOTest {
 
@@ -213,6 +213,10 @@ public class BasicsTest extends AbstractJDOTest {
     @Test
     public void Matches() {
         assertEquals("matches", 1, query(product,product.name.matches("Sony.*")).size());
+        assertSame(
+                query(product, product.name.matches("Sony.*")).size(),
+                query(product, product.name.likeIgnoreCase("sony%")).size()
+        );
     }
 
     @Test

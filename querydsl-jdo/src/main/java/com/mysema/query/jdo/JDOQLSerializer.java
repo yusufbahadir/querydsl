@@ -43,6 +43,7 @@ import com.mysema.query.types.Path;
 import com.mysema.query.types.Predicate;
 import com.mysema.query.types.SubQueryExpression;
 import com.mysema.query.types.expr.Param;
+import com.mysema.query.types.expr.StringOperation;
 
 /**
  * JDOQLSerializer serializes Querydsl queries and expressions into JDOQL strings
@@ -305,9 +306,15 @@ public final class JDOQLSerializer extends SerializerBase<JDOQLSerializer> {
             handle(args.get(0)).append(" instanceof ");
             append(((Constant<Class<?>>) args.get(1)).getConstant().getName());
 
-        } else if (operator == Ops.LIKE || operator == Ops.LIKE_ESCAPE) {
+        } else if (operator == Ops.LIKE || operator == Ops.LIKE_IC || operator == Ops.LIKE_ESCAPE) {
+            Expression<String> string = (Expression<String>) args.get(0);
+            Expression<String> regex = ExpressionUtils.likeToRegex((Expression<String>) args.get(1), false);
+            if (operator == Ops.LIKE_IC) {
+                string = StringOperation.create(Ops.LOWER, string);
+                regex = StringOperation.create(Ops.LOWER, regex);
+            }
             super.visitOperation(type, Ops.MATCHES, 
-                ImmutableList.of(args.get(0), ExpressionUtils.likeToRegex((Expression<String>) args.get(1), false)));
+                ImmutableList.of(string, regex));
             
         // exists    
         } else if (operator == Ops.EXISTS && args.get(0) instanceof SubQueryExpression) {
