@@ -320,10 +320,22 @@ public abstract class StringExpression extends ComparableExpression<String> {
         return BooleanOperation.create(Ops.LIKE, mixin, str);
     }
 
+    /**
+     * Expr: <code>this like str</code> ignoring case
+     *
+     * @param str
+     * @return
+     */
     public BooleanExpression likeIgnoreCase(String str) {
         return BooleanOperation.create(Ops.LIKE_IC, mixin, ConstantImpl.create(str));
     }
 
+    /**
+     * Expr: <code>this like str</code> ignoring case
+     *
+     * @param str
+     * @return
+     */
     public BooleanExpression likeIgnoreCase(Expression<String> str) {
         return BooleanOperation.create(Ops.LIKE_IC, mixin, str);
     }
