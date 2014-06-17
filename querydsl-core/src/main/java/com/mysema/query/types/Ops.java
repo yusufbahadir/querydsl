@@ -134,7 +134,7 @@ public final class Ops {
 
     public static final Operator<Boolean> STARTS_WITH = new OperatorImpl<Boolean>(NS, "STARTS_WITH");
 
-    public static final Operator<Boolean> STARTS_WITH_IC = new OperatorImpl<Boolean>(NS, "STATS_WITH_IC");
+    public static final Operator<Boolean> STARTS_WITH_IC = new OperatorImpl<Boolean>(NS, "STARTS_WITH_IC");
 
     public static final Operator<Number>  INDEX_OF_2ARGS = new OperatorImpl<Number>(NS, "INDEX_OF2");
 
@@ -151,6 +151,8 @@ public final class Ops {
     public static final Operator<Boolean> STRING_CONTAINS_IC = new OperatorImpl<Boolean>(NS, "STRING_CONTAINS_IC");
 
     public static final Operator<Boolean> LIKE = new OperatorImpl<Boolean>(NS, "LIKE");
+
+    public static final Operator<Boolean> LIKE_IC = new OperatorImpl<Boolean>(NS, "LIKE_IC");
 
     public static final Operator<Boolean> LIKE_ESCAPE = new OperatorImpl<Boolean>(NS, "LIKE_ESCAPE");
 

@@ -123,6 +123,7 @@ public class Templates {
         add(Ops.INDEX_OF_2ARGS, "indexOf({0},{1},{2})");
         add(Ops.STRING_IS_EMPTY, "empty({0})");
         add(Ops.LIKE, "{0} like {1}", 26);
+        add(Ops.LIKE_IC, "{0l} like {1l}", 26);
         add(Ops.LIKE_ESCAPE, "{0} like {1} escape '{2s}'", 26);
 
         add(Ops.StringOps.LEFT, "left({0},{1})");
