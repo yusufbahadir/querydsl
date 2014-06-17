@@ -273,8 +273,7 @@ public final class CollQueryFunctions {
             return str.equalsIgnoreCase(like);
         } else {
             return Pattern.compile(pattern.toString(), Pattern.CASE_INSENSITIVE)
-                    .matcher(str)
-                    .lookingAt();
+                    .matcher(str).matches();
         }
     }
 
