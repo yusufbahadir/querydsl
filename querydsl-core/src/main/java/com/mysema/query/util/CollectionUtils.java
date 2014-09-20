@@ -13,6 +13,7 @@
  */
 package com.mysema.query.util;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -135,6 +136,10 @@ public final class CollectionUtils {
         } else {
             return Maps.newHashMap(map);
         }
+    }
+
+    public static boolean isEmpty(Collection<?> collection) {
+        return collection == null || collection.isEmpty();
     }
 
     private CollectionUtils() {}
