@@ -25,6 +25,8 @@ import com.mysema.query.types.ExpressionUtils;
 import com.mysema.query.types.Ops;
 import com.mysema.query.types.Path;
 import com.mysema.query.types.PathImpl;
+import com.mysema.query.util.CollectionUtils;
+import com.mysema.util.ArrayUtils;
 
 /**
  * SimpleExpression is the base class for Expression implementations.
@@ -170,7 +172,9 @@ public abstract class SimpleExpression<T> extends DslExpression<T> {
      * @return
      */
     public BooleanExpression in(Collection<? extends T> right) {
-        if (right.size() == 1) {
+        if (CollectionUtils.isEmpty(right)) {
+            throw new IllegalArgumentException("An empty collection in the IN clause is not allowed");
+        } else if (right.size() == 1) {
             return eq(right.iterator().next());
         } else {
             return BooleanOperation.create(Ops.IN, mixin, ConstantImpl.create(right));
@@ -184,7 +188,9 @@ public abstract class SimpleExpression<T> extends DslExpression<T> {
      * @return
      */
     public BooleanExpression in(T... right) {
-        if (right.length == 1) {
+        if (ArrayUtils.isEmpty(right)) {
+            throw new IllegalArgumentException("An empty array in the IN clause is not allowed");
+        } else  if (right.length == 1) {
             return eq(right[0]);
         } else {
             return BooleanOperation.create(Ops.IN, mixin, ConstantImpl.create(ImmutableList.copyOf(right)));
